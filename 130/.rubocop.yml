@@ -1,0 +1,3 @@
+AllCops:
+  Exclude:
+  # - todo_list.rb

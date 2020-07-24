@@ -1,0 +1,15 @@
+welcome: |+
+  -------------------------------------------------------------
+  ---- Welcome to Rock, Paper, Scissors, Lizard and Spock  ----
+  -------------------------------------------------------------
+
+                    5 wins is the champ!
+
+choice_prompt: |
+  Options:
+      (R)ock
+      (P)apper
+      (S)cissors
+      (L)izard
+      (Sp)ock
+  Enter the letter(s) representing your choice:

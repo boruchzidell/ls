@@ -1,0 +1,5 @@
+AllCops:
+  Exclude:
+  #  - ttt_oo.rb
+  #  - twenty_one_oo.rb
+  # - guess_number_oo.rb
