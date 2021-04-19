@@ -26,13 +26,10 @@ function getClassRawData(obj) {
 }
 
 function getStudentScores(rawData) {
-  let classScoresArray = [];
 
-  rawData.forEach(obj => {
-    classScoresArray.push(computeStudentScore(obj));
-  });
-
-  return classScoresArray;
+  return rawData.map(obj => {
+    return computeStudentScore(obj)
+  })
 }
 
 function computeStudentScore(scoreObj) {
@@ -59,30 +56,17 @@ function computeExercisesWeight(exercisesArray) {
 }
 
 function computeLetterGrade(score) {
-  let letterGrade;
-
-  if (score >= 93 && score <= 100) {
-    letterGrade = 'A';
-  } else if (score >= 85 && score <= 92) {
-    letterGrade = 'B';
-  } else if (score >= 77 && score <= 84) {
-    letterGrade = 'C';
-  } else if (score >= 69 && score <= 76) {
-    letterGrade = 'D';
-  } else if (score >= 60 && score <= 68) {
-    letterGrade = 'E';
-  } else {
-    letterGrade = 'F';
-  }
-
-  return letterGrade;
+  if      (score > 92) return 'A'
+  else if (score > 84) return 'B'
+  else if (score > 76) return 'C'
+  else if (score > 68) return 'D'
+  else if (score > 59) return 'E'
+  else                 return 'F'
 }
 
 function examsTransformStudentToClass(array) {
-  let individualStudentExams = [];
-
-  array.forEach(obj => {
-    individualStudentExams.push(obj.exams);
+  let individualStudentExams = array.map(obj => {
+    return obj.exams;
   });
 
   let numberOfExams = individualStudentExams[0].length;
@@ -98,7 +82,6 @@ function examsTransformStudentToClass(array) {
 
     return exams;
   });
-
 }
 
 function computeExamAggregates(examsList) {
