@@ -20,19 +20,25 @@ function diamond(limit) {
 }
 
 function buildLine(limit, stars) {
-  let spaces = (limit - stars) / 2;
-  return ' '.repeat(spaces) + '*'.repeat(stars);
+  let leftSpaces = (limit - stars) / 2;
+
+  return ' '.repeat(leftSpaces) + buildStars(stars);
+}
+
+function buildStars(stars) {
+  if (stars === 1) return '*'
+  return '*' + ' '.repeat(stars - 2) + '*'
 }
 
 diamond(9);
 
 // logs
 //     *
-//    ***
-//   *****
-//  *******
-// *********
-//  *******
-//   *****
-//    ***
+//    * *
+//   *   *
+//  *     *
+// *       *
+//  *     *
+//   *   *
+//    * *
 //     *
