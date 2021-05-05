@@ -1,17 +1,22 @@
 #! /usr/bin/env node
 
 function diamond(limit) {
-  let output = [];
+  let starSequence = [];
 
-  for (let i = 1; i <= limit; i += 2) {
-    output.push(buildLine(limit, i));
+  let increment = 2;
+
+  for (let i = 1; i >= 1; i += increment) {
+    if (i === limit) {
+      increment = -2;
+    }
+
+    starSequence.push(i);
   }
 
-  for (let i = limit - 2; i >= 1; i -= 2) {
-    output.push(buildLine(limit, i));
-  }
+  starSequence.forEach((number) => {
+    console.log(buildLine(limit, number));
+  });
 
-  return output.join("\n");
 }
 
 function buildLine(limit, stars) {
@@ -19,7 +24,8 @@ function buildLine(limit, stars) {
   return ' '.repeat(spaces) + '*'.repeat(stars);
 }
 
-console.log(diamond(9));
+diamond(9);
+
 // logs
 //     *
 //    ***
