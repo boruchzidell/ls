@@ -12,12 +12,12 @@ function century(yearNum) {
 function formatNumber(number) {
   let numString = String(number).padStart(2, '0');;
 
-  let suffixArray = ['th', 'st', 'nd', 'rd'];
+  let suffixArray = [, 'st', 'nd', 'rd'];
 
-  let suffix = 'th';
+  let suffix = suffixArray[Number(numString[numString.length-1])] || 'th';
 
-  if (numString[0] !== '1') {
-    suffix = suffixArray[Number(numString[1])]
+  if (numString.slice(-2, -1) === '1') {
+    suffix = 'th';
   }
 
   return String(number) + suffix;
@@ -32,3 +32,5 @@ console.log(century(1901) === '20th');
 console.log(century(2000) === '20th');
 console.log(century(2001) === '21st');
 console.log(century(3001) === '31st');
+console.log(century(22222)=== '223rd');
+console.log(century(22512)=== '226th');
