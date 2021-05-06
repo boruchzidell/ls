@@ -23,8 +23,11 @@ function formatNumber(number) {
   return String(number) + suffix;
 }
 
-console.log(century(1)    === '1st');
-console.log(century(101)  === '2nd');
+console.log(century(1)    === '1st' );
+console.log(century(101)  === '2nd' );
+console.log(century(2013) === '21st');
+console.log(century(1301) === '14th');
+console.log(century(1300) === '13th');
 console.log(century(1901) === '20th');
 console.log(century(2000) === '20th');
 console.log(century(2001) === '21st');
