@@ -1,10 +1,9 @@
 #! /usr/bin/env node
 
-
 function compareVersions(version1, version2) {
 
   for (let str of [version1, version2]) {
-    if (str.match(/[^\d\.]/) || !str) return null;
+    if (str.match(/[^\d.]/) || !str) return null;
   }
 
   let [oneNumbers, twoNumbers] = [version1, version2].map( (string) => {
