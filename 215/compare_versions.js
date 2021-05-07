@@ -12,8 +12,11 @@ function compareVersions(version1, version2) {
   });
 
   // Account for uneven array sizes
-  if (oneNumbers.length < twoNumbers.length) {
-    oneNumbers = padArray(oneNumbers, (twoNumbers.length - oneNumbers.length));
+  let lengthOne = oneNumbers.length;
+  let lengthTwo = twoNumbers.length;
+
+  if ( lengthOne < lengthTwo) {
+    oneNumbers = padArray(oneNumbers, (lengthTwo - lengthOne));
   }
 
   for (let i = 0; i < oneNumbers.length; i += 1) {
