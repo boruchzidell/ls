@@ -2,25 +2,18 @@
 
 function compareVersions(version1, version2) {
 
-  for (let str of [version1, version2]) {
-    if (isInValidInput(str)) return null;
-  }
+  if (isInValidInput(version1) || isInValidInput(version2)) return null;
 
-  let [oneNumbers, twoNumbers] = [version1, version2].map( (string) => {
-    return string.split('.').map(Number);
-  });
+  let [oneNumbers, twoNumbers] =
+    [version1, version2].map((string) => {
+      return string.split('.').map(Number);
+    });
 
-  let lengthOne = oneNumbers.length;
-  let lengthTwo = twoNumbers.length;
+  let longestArray = Math.max(oneNumbers.length, twoNumbers.length);
 
-  // Account for uneven array sizes
-  if ( lengthOne < lengthTwo) {
-    oneNumbers = padArray(oneNumbers, (lengthTwo - lengthOne));
-  }
-
-  for (let i = 0; i < oneNumbers.length; i += 1) {
-    let first = oneNumbers[i];
-    let second = twoNumbers[i] || 0;   // account for second array being shorter
+  for (let i = 0; i < longestArray; i += 1) {
+    let first = oneNumbers[i] || 0;
+    let second = twoNumbers[i] || 0;
 
     if ( first < second) return -1;
     if ( first > second) return 1;
@@ -29,22 +22,11 @@ function compareVersions(version1, version2) {
   return 0;
 }
 
-
 function isInValidInput(str) {
   return str.match(/[^\d.]/) ||   // anything other than digits and periods
     !str ||                       // empty string
     str.match(/^\.|\.$/) ||       // leading and trailing dots
     str.match(/\.{2,}/);          // successive dots
-}
-
-function padArray(array, padding) {
-  let padded = [...array];
-
-  for (let i = 1; i <= padding; i += 1) {
-    padded.push(0);
-  }
-
-  return padded;
 }
 
 // invalid cases
