@@ -1,9 +1,9 @@
 #! /usr/bin/env node
 
-function luhn(number) {
-  let digits = number.match(/\d/g).map(Number);
+function luhn(stringNumber) {
+  let digits = stringNumber.match(/\d/g).map(Number);
 
-  let transformed = digits.map((digit, index, array) => {
+  let doubledDigits = digits.map((digit, index, array) => {
       if ((array.length - index) % 2 === 0) {
         let doubled = digit * 2;
 
@@ -16,7 +16,7 @@ function luhn(number) {
       }
   })
 
-  let sum = transformed.reduce((sum, digit) => sum + digit, 0);
+  let sum = doubledDigits.reduce((sum, digit) => sum + digit, 0);
 
   return sum % 10 === 0;
 }
