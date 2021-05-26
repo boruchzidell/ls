@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+test
 
 function century(yearNum) {
   let year = yearNum;
