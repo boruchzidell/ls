@@ -1,56 +1,61 @@
 #! /usr/bin/env node
 
+// ====================== Main Method ==================================
 function expander(string) {
-  let ranges = string.split(', ')
+  let rawGroups = string.split(', ')
 
-  let numberResults = [];
+  let allExpandedNumbers = rawGroups.reduce((array, section) => {
+    let lastExpandedNumber = array.slice(-1)[0] || 0;
 
-  ranges.forEach(section => {
-    if (section.match(/\D/)) {
-      let ranges = section.split(/[-:.]+/);
+    // Singles
+    if (!section.match(/\D/)) return array.concat(computeNumber(lastExpandedNumber, section));
 
-      let rangesComputed = [];
+    // Ranges
+    return [...array, ...expandRawRangetoNumbers(lastExpandedNumber, section)];
+  }, []);
 
-      for (let i = 0; i < ranges.length; i += 1) {
-        if (i === 0) {
-          let lastOfRange = numberResults[numberResults.length - 1] || 0;
-          rangesComputed.push(computeNumber(lastOfRange, ranges[i]));
-        } else {
-          rangesComputed.push(computeNumber(rangesComputed[rangesComputed.length - 1], ranges[i]));
-        }
-      }
+  return allExpandedNumbers;
+}
 
-      let reduced = rangesComputed.reduce((acc, element, idx) => {
-        let current = element;
-        do {
-          acc.push(current);
-          current += 1;
-        } while (current < rangesComputed[idx + 1]);
-        return acc;
-      }, []);
+// ===================  Helper Methods ==================================
+function expandRawRangetoNumbers(lastExpandedNumber, rawRangeString) {
+  let rawRangeBounds = rawRangeString.split(/[-:.]+/);
 
-      numberResults = numberResults.concat(reduced);
-    } else {
-      numberResults.push(computeNumber(numberResults[numberResults.length - 1] || 0, section))
-    }
+  let computedRangeBounds = rawRangeBounds.reduce((array, element, idx) => {
+    if (idx === 0) return array.concat(computeNumber(lastExpandedNumber, element));
 
-  });
+    return array.concat(computeNumber(array.slice(-1)[0], element));
+  }, []);
 
-  return numberResults;
+  let filledRange = computedRangeBounds.reduce((array, element, idx) => {
+    let current = element;
+
+    do {
+      array.push(current);
+      current += 1;
+    } while (current < computedRangeBounds[idx + 1]);
+
+    return array;
+  }, []);
+
+  return filledRange;
 }
 
 function computeNumber(previous, current) {
-  if (Number(current) > Number(previous)) {
-    return Number(current);
-  } else {
-    let left = String(previous).slice(0, String(previous).length - current.length) || 0;
-    let right = String(previous).slice(String(previous).length - current.length);
-    if (right > current) {
-      return Number(String(Number(left) + 1) + current);
-    } else {
-      return Number(left + current);
-    }
+  let currentNumber = Number(current);
+
+  if (currentNumber > previous) {
+    return currentNumber;
   }
+
+  let previousStringNumber = String(previous);
+  let leftString = previousStringNumber.slice(0, previousStringNumber.length - current.length) || '0';
+  let rightString = previousStringNumber.slice(previousStringNumber.length - current.length);
+
+  if (rightString > current) {
+    return Number(String(Number(leftString) + 1) + current);
+  }
+  return Number(leftString + current);
 }
 
 console.log(expander("1, 3, 7, 2, 4, 1"));  // [1, 3, 7, 12, 14, 21]
